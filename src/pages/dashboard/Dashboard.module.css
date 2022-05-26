@@ -1,0 +1,19 @@
+.wrapper {
+    margin-top: 100px;
+    display: flex;
+    justify-content: space-between;
+    grid-gap: 1em;
+    flex-wrap: wrap;
+}
+.addBtn {
+    border: 2px solid goldenrod;
+    padding: 20px;
+    width: 18rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.addBtn > img {
+    width: 100%;
+}

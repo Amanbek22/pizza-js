@@ -1,0 +1,18 @@
+.wrapper {
+    width: 500px;
+    text-align: center;
+    margin: 50px auto;
+}
+.inputWrapper {
+    margin-top: 25px;
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    font-size: 18px;
+}
+
+.inputWrapper input {
+    padding: 5px;
+    border: 2px solid gold;
+    border-radius: 5px;
+}
