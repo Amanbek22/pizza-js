@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from "react";
-import { api } from './../../api/Api';
+import Api from './../../api/Api';
 
 export default function Pizzacard({
   name,
@@ -13,7 +13,8 @@ export default function Pizzacard({
   ...props
 }) {
   const onDelete = () => {
-    api.delete("pizza/" + id)
+    // api.delete("pizza/" + id)
+    Api.deletePizza(id)
       .then(() => {
         alert("Вы удалили эту пиццу!")
         window.location.reload()

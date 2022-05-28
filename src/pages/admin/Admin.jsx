@@ -1,15 +1,23 @@
 import css from "./Admin.module.css";
-import { useState } from 'react';
+import { useState } from "react";
+import Api from "../../api/Api";
 
-export default function Admin() {
-    const [login, setLogin] = useState("");
-    const [password, setPassword] = useState("");
+export default function Admin({ setAuth }) {
+  const [login, setLogin] = useState("");
+  const [password, setPassword] = useState("");
 
   const submit = (e) => {
-      e.preventDefault();
-      // TODO: add auth logic
-      alert(login + " " + password)
-  }  
+    e.preventDefault();
+    // TODO: add auth logic
+    alert(login + " " + password);
+    Api.auth({ login, password }).then((res) => {
+      if (res.data.token) {
+        setAuth(res.data)
+      } else {
+        alert("Something went wrong. Please try later!")
+      }
+    });
+  };
   return (
     <div>
       <form onSubmit={submit} className={css.form}>
@@ -17,7 +25,12 @@ export default function Admin() {
           <label for="exampleInputEmail1" class="form-label">
             Login
           </label>
-          <input type="text" class="form-control" value={login} onChange={(e) => setLogin(e.target.value) } />
+          <input
+            type="text"
+            class="form-control"
+            value={login}
+            onChange={(e) => setLogin(e.target.value)}
+          />
           <div id="emailHelp" class="form-text">
             We'll never share your email with anyone else.
           </div>
@@ -27,7 +40,8 @@ export default function Admin() {
             Password
           </label>
           <input
-            value={password} onChange={(e) => setPassword(e.target.value) }
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
             type="password"
             class="form-control"
             id="exampleInputPassword1"

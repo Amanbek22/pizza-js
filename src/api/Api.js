@@ -1,7 +1,16 @@
 import axios from "axios";
 
-const baseUrl = "https://626d32c850a310b8a34bdca8.mockapi.io/"
+const baseUrl = "http://solid.lol/"
 
-export const api = axios.create({
+const api = axios.create({
     baseURL: baseUrl
 })
+
+const Api = {
+    createPizza: (data) => api.post("add/pizza", data),
+    getAllPizza: () => api.get("getall/pizza"),
+    deletePizza: (id) => api.delete("delete/pizza/" + id),
+    auth: (data) => api.post("/admin", data)
+}
+
+export default Api;

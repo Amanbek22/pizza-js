@@ -1,6 +1,6 @@
 import React from "react";
 import css from "./CreatePizza.module.css";
-import { api } from "./../../api/Api";
+import Api from "./../../api/Api";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -28,11 +28,12 @@ export default function CreatePizza({ addNewPizza }) {
       info: info,
       image: "",
     };
-    api.post("pizza", data).then((res) => {
-      console.log(res);
-      addNewPizza(res.data)
-      navigate("/dashboard");
-    });
+    Api.createPizza(data)
+      .then((res) => {
+        console.log(res);
+        addNewPizza(res.data);
+        navigate("/dashboard");
+      });
   };
   return (
     <form onSubmit={submit} className={css.wrapper}>
