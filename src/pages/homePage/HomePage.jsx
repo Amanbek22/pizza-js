@@ -19,11 +19,13 @@ export default function HomePage(props) {
 
         <div className={'mb-5 ' + css.pizzasWrapper}>
             {
-              props.pizzas.map((item, index) => <Pizzacard 
-                addToBasket={props.addToBasket}
-                key={item.id} 
-                {...item}
-              />)
+              props.pizzas.length 
+                ? props.pizzas.map((item, index) => <Pizzacard 
+                  addToBasket={props.addToBasket}
+                  key={item.id} 
+                  {...item}
+                />)
+                : <h2 className='water-text'>Пока нет пицц!</h2>
             }
         </div>
     </div>
