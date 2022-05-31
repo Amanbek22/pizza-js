@@ -20,7 +20,7 @@ export default function HomePage(props) {
         <div className={'mb-5 ' + css.pizzasWrapper}>
             {
               props.pizzas.length 
-                ? props.pizzas.map((item, index) => <Pizzacard 
+                ? props.pizzas.map((item, index) => <Pizzacard
                   addToBasket={props.addToBasket}
                   key={item.id} 
                   {...item}

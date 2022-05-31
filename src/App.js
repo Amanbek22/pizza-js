@@ -7,6 +7,7 @@ import Dashboard from "./pages/dashboard/Dashboard";
 import HomePage from "./pages/homePage/HomePage";
 import Api from "./api/Api";
 import CreatePizza from "./pages/createPizza/CreatePizza";
+import { useSelector, useDispatch } from "react-redux";
 
 const PrivateRoute = ({ Component, isAuth }) => {
   return isAuth ? <Component /> : <Navigate to="/admin" />;
@@ -16,10 +17,15 @@ const PublickRoute = ({ Component, isAuth }) => {
 };
 
 function App() {
+  const countRedux = useSelector( (state) => state.count )
+
   const [pizzas, setPizzas] = useState([]);
   const [basket, setBasket] = useState(
     JSON.parse(localStorage.getItem("basket")) || []
   );
+
+  const dispatch = useDispatch();
+
   const [isAuth, setIsAuth] = useState(
     JSON.parse(localStorage.getItem("auth"))
   );
@@ -39,8 +45,9 @@ function App() {
   };
 
   useEffect(() => {
-    Api.getAllPizza().then((res) => {
-      setPizzas(res.data.data.data);
+    Api.getAllPizzaMock().then((res) => {
+      // setPizzas(res.data.data.data);
+      setPizzas(res.data);
     });
 
     // fetch(baseUrl + "pizza")
@@ -58,6 +65,25 @@ function App() {
 
   return (
     <BrowserRouter>
+      <div className="test-box">
+        <button
+          onClick={() => {
+              dispatch( {type: "MINUS"} )
+          }}
+        >
+          Minus
+        </button>
+
+        <span>{countRedux}</span>
+
+        <button
+          onClick={() => {
+            dispatch( {type: "PLUS"} )
+          }}
+        >
+          Plus
+        </button>
+      </div>
       <Header removeFromBasket={removeFromBasket} basket={basket} />
       <div className="container">
         <Routes>
@@ -78,7 +104,9 @@ function App() {
             path="/dashboard"
             element={
               <PrivateRoute
-                Component={() => <Dashboard pizzas={pizzas} setAuth={setIsAuth} />}
+                Component={() => (
+                  <Dashboard pizzas={pizzas} setAuth={setIsAuth} />
+                )}
                 isAuth={isAuth}
               />
             }
