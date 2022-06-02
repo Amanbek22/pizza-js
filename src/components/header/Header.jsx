@@ -1,8 +1,10 @@
 import { useState } from "react";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import Modal from "../modal/Modal";
 
 export default function Header(props) {
+  const basket = useSelector( (state) => state.basket.data);
   const [isModal, setIsModal] = useState(false);
 
   return (
@@ -62,7 +64,7 @@ export default function Header(props) {
               </ul>
             </li>
             <li onClick={() => setIsModal(true)} className="nav-item">
-              <a className="btn btn-success">Корзина | {props.basket.length}</a>
+              <a className="btn btn-success">Корзина | {basket.length}</a>
             </li>
           </ul>
           <form className="d-flex">
@@ -78,7 +80,7 @@ export default function Header(props) {
           </form>
         </div>
       </div>
-      <Modal remove={props.removeFromBasket} basket={props.basket} setIsModal={setIsModal} isModal={isModal} />
+      <Modal remove={props.removeFromBasket} basket={basket} setIsModal={setIsModal} isModal={isModal} />
     </nav>
   );
 }

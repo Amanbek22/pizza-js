@@ -17,10 +17,7 @@ const PublickRoute = ({ Component, isAuth }) => {
 };
 
 function App() {
-  const countRedux = useSelector( (state) => state.count )
-
-  const [pizzas, setPizzas] = useState([]);
-  const [basket, setBasket] = useState(
+  const [_, setBasket] = useState(
     JSON.parse(localStorage.getItem("basket")) || []
   );
 
@@ -29,25 +26,22 @@ function App() {
   const [isAuth, setIsAuth] = useState(
     JSON.parse(localStorage.getItem("auth"))
   );
-
-  const addToBasket = (pizza) => {
-    setBasket([...basket, pizza]);
-  };
-
   const removeFromBasket = (id) => {
-    const arr = basket.filter((el) => el.id !== id);
+    const arr = _.filter((el) => el.id !== id);
     setBasket(arr);
   };
 
   const addNewPizza = (newPizza) => {
     console.log(newPizza);
-    setPizzas([...pizzas, newPizza]);
+    // TODO: rewrite to redux logic
+    // setPizzas([...pizzas, newPizza]);
   };
 
   useEffect(() => {
     Api.getAllPizzaMock().then((res) => {
       // setPizzas(res.data.data.data);
-      setPizzas(res.data);
+      // setPizzas(res.data);
+      dispatch( { type: "SET_ALL_PIZZA", payload: res.data } )
     });
 
     // fetch(baseUrl + "pizza")
@@ -56,8 +50,8 @@ function App() {
   }, []);
 
   useEffect(() => {
-    localStorage.setItem("basket", JSON.stringify(basket));
-  }, [basket]);
+    localStorage.setItem("basket", JSON.stringify(_));
+  }, [_]);
 
   useEffect(() => {
     localStorage.setItem("auth", JSON.stringify(isAuth));
@@ -65,31 +59,12 @@ function App() {
 
   return (
     <BrowserRouter>
-      <div className="test-box">
-        <button
-          onClick={() => {
-              dispatch( {type: "MINUS"} )
-          }}
-        >
-          Minus
-        </button>
-
-        <span>{countRedux}</span>
-
-        <button
-          onClick={() => {
-            dispatch( {type: "PLUS"} )
-          }}
-        >
-          Plus
-        </button>
-      </div>
-      <Header removeFromBasket={removeFromBasket} basket={basket} />
+      <Header removeFromBasket={removeFromBasket} />
       <div className="container">
         <Routes>
           <Route
             path="/"
-            element={<HomePage pizzas={pizzas} addToBasket={addToBasket} />}
+            element={<HomePage />}
           />
           <Route
             path="/admin"
@@ -105,7 +80,7 @@ function App() {
             element={
               <PrivateRoute
                 Component={() => (
-                  <Dashboard pizzas={pizzas} setAuth={setIsAuth} />
+                  <Dashboard setAuth={setIsAuth} />
                 )}
                 isAuth={isAuth}
               />

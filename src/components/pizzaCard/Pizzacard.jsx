@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Api from './../../api/Api';
 
 export default function Pizzacard({
@@ -9,10 +9,12 @@ export default function Pizzacard({
   info,
   image,
   id,
-  addToBasket,
   isAdmin,
   ...props
 }) {
+
+  const dispatch = useDispatch(); 
+
   const onDelete = () => {
     // api.delete("pizza/" + id)
     Api.deletePizza(id)
@@ -20,6 +22,11 @@ export default function Pizzacard({
         alert("Вы удалили эту пиццу!")
         window.location.reload()
       })
+  }
+
+  const addToBasket = () => {
+    const data = { name, price, info, image, id }
+    dispatch( {type: "SET_PIZZA_BASKET", payload: data} );
   }
   return (
     <div>
@@ -41,9 +48,7 @@ export default function Pizzacard({
           ) : (
             <button
               className="btn btn-primary"
-              onClick={() => {
-                addToBasket({ name, price, info, image, id });
-              }}
+              onClick={addToBasket}
             >
               Выбрать
             </button>

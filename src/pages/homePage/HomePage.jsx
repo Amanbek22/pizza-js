@@ -1,4 +1,5 @@
 import React from 'react'
+import { useSelector } from 'react-redux';
 import Pizzacard from '../../components/pizzaCard/Pizzacard';
 import SliderInfo from '../../components/sliderInfo/SliderInfo';
 import css from "./HomePage.module.css";
@@ -9,7 +10,9 @@ import css from "./HomePage.module.css";
 //   img: "lsjdgjlsdkg"
 // }
 
-export default function HomePage(props) {
+export default function HomePage() {
+  const pizzas = useSelector( (state) => state.pizzas.data );
+
   return (
     <div className='mt-5'>
         <SliderInfo />
@@ -19,9 +22,8 @@ export default function HomePage(props) {
 
         <div className={'mb-5 ' + css.pizzasWrapper}>
             {
-              props.pizzas.length 
-                ? props.pizzas.map((item, index) => <Pizzacard
-                  addToBasket={props.addToBasket}
+              pizzas.length 
+                ? pizzas.map((item, index) => <Pizzacard
                   key={item.id} 
                   {...item}
                 />)
