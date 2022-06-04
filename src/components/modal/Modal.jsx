@@ -1,7 +1,15 @@
 import React from "react";
+import { useDispatch } from "react-redux";
+import { DELETE_PIZZA_BASKET } from "../../redux/ActionTypes";
 import css from "./Modal.module.css";
 
 const BasketCard = (props) => {
+  const dispatch = useDispatch();
+
+  const onDeleteFromBasket = () => {
+    dispatch( {type: DELETE_PIZZA_BASKET, id: props.id} )
+  }
+
   return (
     <div className={css.basket_card}>
       <div className={css.card_info}>
@@ -16,7 +24,7 @@ const BasketCard = (props) => {
       <hr />
       <div className={css.info}>
         <p>{props.price}сом</p>
-        <button className={css.delete} onClick={() => props.remove(props.id)}>Удалить</button>
+        <button className={css.delete} onClick={onDeleteFromBasket}>Удалить</button>
       </div>
     </div>
   );
@@ -44,7 +52,7 @@ export default function Modal(props) {
 
             <div className={css.list}>
               {props.basket.map((el) => (
-                <BasketCard key={el.id} {...el} remove={props.remove} />
+                <BasketCard key={el.id} {...el} />
               ))}
             </div>
 

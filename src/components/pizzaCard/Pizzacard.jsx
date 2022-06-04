@@ -1,6 +1,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { SET_PIZZA_BASKET } from "../../redux/ActionTypes";
 import Api from './../../api/Api';
 
 export default function Pizzacard({
@@ -26,7 +27,7 @@ export default function Pizzacard({
 
   const addToBasket = () => {
     const data = { name, price, info, image, id }
-    dispatch( {type: "SET_PIZZA_BASKET", payload: data} );
+    dispatch( {type: SET_PIZZA_BASKET, payload: data} );
   }
   return (
     <div>

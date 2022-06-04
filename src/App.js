@@ -8,6 +8,7 @@ import HomePage from "./pages/homePage/HomePage";
 import Api from "./api/Api";
 import CreatePizza from "./pages/createPizza/CreatePizza";
 import { useSelector, useDispatch } from "react-redux";
+import { SET_ALL_PIZZA } from "./redux/ActionTypes";
 
 const PrivateRoute = ({ Component, isAuth }) => {
   return isAuth ? <Component /> : <Navigate to="/admin" />;
@@ -17,19 +18,11 @@ const PublickRoute = ({ Component, isAuth }) => {
 };
 
 function App() {
-  const [_, setBasket] = useState(
-    JSON.parse(localStorage.getItem("basket")) || []
-  );
-
   const dispatch = useDispatch();
 
   const [isAuth, setIsAuth] = useState(
     JSON.parse(localStorage.getItem("auth"))
   );
-  const removeFromBasket = (id) => {
-    const arr = _.filter((el) => el.id !== id);
-    setBasket(arr);
-  };
 
   const addNewPizza = (newPizza) => {
     console.log(newPizza);
@@ -39,19 +32,9 @@ function App() {
 
   useEffect(() => {
     Api.getAllPizzaMock().then((res) => {
-      // setPizzas(res.data.data.data);
-      // setPizzas(res.data);
-      dispatch( { type: "SET_ALL_PIZZA", payload: res.data } )
+      dispatch( { type: SET_ALL_PIZZA, payload: res.data } )
     });
-
-    // fetch(baseUrl + "pizza")
-    //   .then((res) => res.json())
-    //   .then((data) => setPizzas(data))
   }, []);
-
-  useEffect(() => {
-    localStorage.setItem("basket", JSON.stringify(_));
-  }, [_]);
 
   useEffect(() => {
     localStorage.setItem("auth", JSON.stringify(isAuth));
@@ -59,7 +42,7 @@ function App() {
 
   return (
     <BrowserRouter>
-      <Header removeFromBasket={removeFromBasket} />
+      <Header />
       <div className="container">
         <Routes>
           <Route

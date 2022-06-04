@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import Modal from "../modal/Modal";
 
-export default function Header(props) {
+export default function Header() {
   const basket = useSelector( (state) => state.basket.data);
   const [isModal, setIsModal] = useState(false);
 
@@ -80,7 +80,7 @@ export default function Header(props) {
           </form>
         </div>
       </div>
-      <Modal remove={props.removeFromBasket} basket={basket} setIsModal={setIsModal} isModal={isModal} />
+      <Modal basket={basket} setIsModal={setIsModal} isModal={isModal} />
     </nav>
   );
 }
