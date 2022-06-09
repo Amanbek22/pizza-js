@@ -4,7 +4,7 @@ const baseUrl = "http://solid.lol/"
 const mockApiBaseUrl = "https://605b21f027f0050017c063b9.mockapi.io/api/v3/";
 
 const api = axios.create({
-    baseURL: mockApiBaseUrl
+    baseURL: baseUrl
 })
 
 

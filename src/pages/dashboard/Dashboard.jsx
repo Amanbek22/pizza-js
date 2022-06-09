@@ -2,12 +2,16 @@ import React from "react";
 import Pizzacard from "../../components/pizzaCard/Pizzacard";
 import css from "./Dashboard.module.css";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { SET_LOGOUT } from "../../redux/ActionTypes";
 
-export default function Dashboard(props) {
+export default function Dashboard() {
   const pizzas = useSelector( (state) => state.pizzas.data )
+  const dispatch = useDispatch();
+
   const logout = () => {
-    props.setAuth(null)
+    // props.setAuth(null)
+    dispatch( { type: SET_LOGOUT } )
   }
   return (
     <div>

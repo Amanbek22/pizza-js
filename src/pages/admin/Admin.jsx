@@ -1,18 +1,34 @@
 import css from "./Admin.module.css";
 import { useState } from "react";
 import Api from "../../api/Api";
+import { useDispatch } from "react-redux";
+import { SET_AUTH } from "../../redux/ActionTypes";
 
-export default function Admin({ setAuth }) {
+export default function Admin() {
   const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
+  const dispatch = useDispatch();
 
   const submit = (e) => {
     e.preventDefault();
     // TODO: add auth logic
     alert(login + " " + password);
+    // TODO: remove after test
+    dispatch( 
+      { 
+        type: SET_AUTH, 
+        payload: { token: "lorem10000" } 
+      }
+    )
     Api.auth({ login, password }).then((res) => {
       if (res.data.token) {
-        setAuth(res.data)
+        // setAuth(res.data)
+        dispatch( 
+          { 
+            type: "SET_AUTH", 
+            payload: res.data 
+          }
+        )
       } else {
         alert("Something went wrong. Please try later!")
       }

@@ -10,19 +10,21 @@ import CreatePizza from "./pages/createPizza/CreatePizza";
 import { useSelector, useDispatch } from "react-redux";
 import { SET_ALL_PIZZA } from "./redux/ActionTypes";
 
-const PrivateRoute = ({ Component, isAuth }) => {
+
+const PrivateRoute = ({ Component }) => {
+  const isAuth = useSelector( (state) => state.auth.data?.token );
+
   return isAuth ? <Component /> : <Navigate to="/admin" />;
 };
-const PublickRoute = ({ Component, isAuth }) => {
+
+const PublickRoute = ({ Component }) => {
+  const isAuth = useSelector( (state) => state.auth.data?.token );
+
   return !isAuth ? <Component /> : <Navigate to="/dashboard" />;
 };
 
 function App() {
   const dispatch = useDispatch();
-
-  const [isAuth, setIsAuth] = useState(
-    JSON.parse(localStorage.getItem("auth"))
-  );
 
   const addNewPizza = (newPizza) => {
     console.log(newPizza);
@@ -36,9 +38,6 @@ function App() {
     });
   }, []);
 
-  useEffect(() => {
-    localStorage.setItem("auth", JSON.stringify(isAuth));
-  }, [isAuth]);
 
   return (
     <BrowserRouter>
@@ -52,21 +51,13 @@ function App() {
           <Route
             path="/admin"
             element={
-              <PublickRoute
-                Component={() => <Admin setAuth={setIsAuth} />}
-                isAuth={isAuth}
-              />
+              <PublickRoute Component={Admin} />
             }
           />
           <Route
             path="/dashboard"
             element={
-              <PrivateRoute
-                Component={() => (
-                  <Dashboard setAuth={setIsAuth} />
-                )}
-                isAuth={isAuth}
-              />
+              <PrivateRoute Component={Dashboard} />
             }
           />
           <Route
@@ -74,7 +65,6 @@ function App() {
             element={
               <PrivateRoute
                 Component={() => <CreatePizza addNewPizza={addNewPizza} />}
-                isAuth={isAuth}
               />
             }
           />
