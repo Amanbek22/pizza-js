@@ -3,7 +3,7 @@ import Pizzacard from "../../components/pizzaCard/Pizzacard";
 import css from "./Dashboard.module.css";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { SET_LOGOUT } from "../../redux/ActionTypes";
+import { setLogoutAC } from "../../redux/actions/actions";
 
 export default function Dashboard() {
   const pizzas = useSelector( (state) => state.pizzas.data )
@@ -11,7 +11,7 @@ export default function Dashboard() {
 
   const logout = () => {
     // props.setAuth(null)
-    dispatch( { type: SET_LOGOUT } )
+    dispatch( setLogoutAC() )
   }
   return (
     <div>

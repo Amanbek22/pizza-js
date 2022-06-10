@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import "./App.css";
 import Header from "./components/header/Header";
@@ -8,7 +8,7 @@ import HomePage from "./pages/homePage/HomePage";
 import Api from "./api/Api";
 import CreatePizza from "./pages/createPizza/CreatePizza";
 import { useSelector, useDispatch } from "react-redux";
-import { SET_ALL_PIZZA } from "./redux/ActionTypes";
+import { getAllPizzaAC, setAllPizzasAC } from "./redux/actions/actions";
 
 
 const PrivateRoute = ({ Component }) => {
@@ -33,9 +33,7 @@ function App() {
   };
 
   useEffect(() => {
-    Api.getAllPizzaMock().then((res) => {
-      dispatch( { type: SET_ALL_PIZZA, payload: res.data } )
-    });
+    dispatch( getAllPizzaAC() );
   }, []);
 
 

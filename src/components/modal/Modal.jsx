@@ -1,13 +1,13 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { DELETE_PIZZA_BASKET } from "../../redux/ActionTypes";
+import { deletePizzaBasketAC } from "../../redux/actions/actions";
 import css from "./Modal.module.css";
 
 const BasketCard = (props) => {
   const dispatch = useDispatch();
 
   const onDeleteFromBasket = () => {
-    dispatch( {type: DELETE_PIZZA_BASKET, id: props.id} )
+    dispatch( deletePizzaBasketAC(props.id) )
   }
 
   return (

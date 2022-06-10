@@ -6,9 +6,6 @@ const initialState = {
 };
 
 export const authReducer = (state = initialState, action) => {
-  debugger;
- 
- 
   switch (action.type) {
     case SET_AUTH:
       return { ...state, data: action.payload };
