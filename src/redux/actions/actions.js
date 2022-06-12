@@ -16,16 +16,13 @@ export const setPizzaBasket = (payload) => ({
   type: SET_PIZZA_BASKET,
   payload,
 });
-
 export const setAuthAC = (payload) => ({
   type: SET_AUTH,
   payload,
 });
-
 export const setLogoutAC = () => ({
   type: SET_LOGOUT,
 });
-
 export const deletePizzaBasketAC = (id) => ({
   type: DELETE_PIZZA_BASKET,
   id,
